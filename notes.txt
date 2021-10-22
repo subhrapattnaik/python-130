@@ -1,0 +1,143 @@
+name - This is the name of the exo-planet.
+light_years_from_earth - This is the distance of this planet from Earth in light years. 1
+light year is the distance light can travel in one year, and light it super fast. It can travel
+9.461 Trillion km in 1 year.
+planet_mass - This is the mass of the planet with respect to Earth or Jupiter (Jupiter is
+the metric for Gas Giants while Earth is the metric for all other types of planets).
+stellar_magnitude - This is the brightness of the host star of the planet when observed
+from Earth (just as the sun is our host star).
+discovery_date - This is the year of discovery for the exo-planet.
+hyperlink - This is just the hyperlink that we scraped.
+planet_type - This is the type of the planet (Gas Giant, Super Earth, etc.)
+
+temp_planet_date - This is a duplicate.
+temp_planet_mass - This is another duplicate.
+planet_radius - This is the radius of the exo-planet with respect to Earth or Jupiter.
+orbital_radius - This is the average distance of this exo-planet from its sun. Just like our
+solar system has 1 sun, there are multiple solar systems that contain many planets and
+sun(s).
+orbital_period - This is the time it takes to complete one orbit of it’s sun.
+eccentricity - This denotes how circular the orbit is. It might be oval in shape too. The
+lower the eccentricity, the more circular is the orbit.
+pl_hostname - The name of the host solar system.
+pl_letter - The letter given to this planet.
+pl_name - The name of this planet (short version).
+pl_discmethod - This is the discovery method which was used to find this exo-planet.
+pl_controvflag - This is a boolean (0, 1) which says if the existence of this planet is
+questioned or not.
+pl_pnum - This is the number of planets that are there in its solar system.
+pl_orbper - This is again, the orbital period in days.
+Now since we are collecting data for planets that exist so far away from us, there is no
+way for us to know the actual values of a planet, such as their orbital period, radius, etc.
+so we do calculations for it. Each calculation is based on observation such as here, can
+have a margin of error in the actual value. Thus, all the columns with err1 and err2 are
+the scope of errors, and we will ignore them.
+pl_orbperlim - This is again the radius of the orbit of the planet.
+pl_orbeccen - This is again the eccentricity of the planet.
+pl_orbincl - This is the orbital inclination, which means that it is the tilt of the exo-planet’s
+orbit when it revolves around its sun.
+
+
+
+pl_bmassj - This is again the mass of the planet.
+pl_bmassprov - This is the unit to calculate the mass.
+pl_radj - This is again, the radius of the planet.
+pl_dens - This is the density of the planet.
+pl_ttvflag - This is a flag that indicates if this planet's orbit exhibits any timing variations
+from other planets in the system.
+pl_kepflag - This is a flag that tells if the solar system exhibits a planetary system
+(multiple planets) based on Kepler Field Mission.
+pl_k2flag - This is a flag that tells if the solar system exhibits a planetary system based
+on the K2 Mission.
+pl_nnotes - This is just the number of notes associated with the planet.
+ra_str - This is the right ascension of the planetary system, which is the east-west
+coordinate by which the position of this planet is measured.
+dec_str - This is the north-south coordinate by which the position of the planet is
+measured.
+st_dist - This is again the distance of the planet from Earth.
+gaia_dist - This is again the distance of the planet from Earth in Gaia Parallax. Gaia
+Parallax is the coordinate that is calculated with Trigonometry.
+st_optmag - This is the Optical magnitude (discussed earlier).
+st_optband - There are different bands in light. This is the band of the optical magnitude.
+gaia_gmag - This is the magnitude of the host star of the planet measured in G-Band.
+st_teff - This is the temperature of the host star in Kelvin.
+st_mass - This is the amount of mass contained in the host star.
+st_rad - This is the radius of the host star.
+
+----------------------------------------------------
+---------------------------------
+Virtual environment
+
+the below i did in my system
+python -m venv venv
+venv\Scripts\activate.bat
+
+--------------------------------------
+
+
+
+
+df = pd.read_csv("final.csv")
+df.shape()
+
+output
+(4284, 85)
+
+
+This means that we have 4,284 rows
+(the same number as our
+exo-planets) and we have 85
+columns. We will first begin with
+removing all the unwanted columns,
+as we have many of them.
+
+----------------------------------
+To remove a column from a
+dataframe, we do:
+del df["hyperlink"]
+This will remove the hyperlink
+column from the dataframe!
+
+---------------------------------------
+
+print(list(df))
+This will give us the list of all the
+headers.
+-------------------------------------------
+
+Let’s change the name of these
+headers and make them more
+readable. Our headers look fine up
+until eccentricity. We will change the
+others with the following code:
+
+df = df.rename({
+                'pl_hostname': "solar_system_name", 
+                'pl_discmethod': "planet_discovery_method", 
+                'pl_orbincl': "planet_orbital_inclination", 
+                'pl_dens': "planet_density", 
+                'ra_str': "right_ascension", 
+                'dec_str': "declination", 
+                "st_teff": "host_temperature", 
+                'st_mass': "host_mass", 
+                'st_rad': "host_radius"
+            }, axis='columns')
+
+df.to_csv('main.csv') 
+
+--------------------------------------------
+
+We have
+reduced the number of columns from
+85 to 19 and we have made our
+headers much more readable. It looks
+like our data is ready to be used to
+perform statistics. One last thing that
+we need to do is that we have to
+create a main CSV which we are
+going to use for our statistics. Let’s do
+that!
+
+df.to_csv('main.csv')
+
+------------------------------------------------
